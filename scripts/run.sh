@@ -1,11 +1,11 @@
 #!/bin/bash
 
 if [ $# -eq 0 ]; then
-	echo "Usage: ./scripts/run.sh [all|ibmq_only|dwave_only|codesign_only|paper_only|bash]"
+	echo "Usage: ./scripts/run.sh [all|ibmq_only|dwave_only|codesign_only|bash]"
 	exit 1
 fi
 
-# in case the script is not started from within qsa-repro directory
+# in case the script is not started from within sigmod-repro directory
 if [ ! "${PWD}" = "/home/repro/sigmod-repro" ]; then
     cd /home/repro/sigmod-repro/
 fi
