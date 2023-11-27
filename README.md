@@ -1,10 +1,10 @@
-# Ready to Leap (by co-design)? Join Order Optimisation on Quantum Hardware
+# Ready to Leap (by Co-Design)? Join Order Optimisation on Quantum Hardware
 
-This repository contains a complete reproduction package, including code and data artifacts, for "Ready to Leap (by co-design)? Join Order Optimisation on Quantum Hardware", accepted at SIGMOD 2023.
+This repository contains a complete reproduction package, including code and data artifacts, for "Ready to Leap (by Co-Design)? Join Order Optimisation on Quantum Hardware", accepted at SIGMOD 2023.
 
 ## Reproduction
 
-### Build docker image
+### Build Docker Image
 
 ```
 docker build -t sigmod-repro .
