@@ -2,6 +2,37 @@
 
 This repository contains a complete reproduction package, including code and data artifacts, for "Ready to Leap (by co-design)? Join Order Optimisation on Quantum Hardware", accepted at SIGMOD 2023.
 
+## Reproduction
+
+### Build docker image
+
+```
+docker build -t sigmod-repro .
+```
+
+### Create Container
+
+```
+docker run --name sigmod-repro -it sigmod-repro [<option>]
+```
+The `<option>` specifies which operations are performed on container start.
+
+Available options are:
+* `ibmq_only`: Runs only IBM Q experiments
+* `dwave_only`: Runs only D-Wave experiments
+* `codesign_only`: Runs only DB-QPU co-design experiments
+* `all`: Runs all of the above
+* `bash`: Launches an interactive shell
+
+For a full reproduction, we recommend running
+```
+docker run --name sigmod-repro -it sigmod-repro all
+```
+Finally, to move the generated plots onto the host system, the following command may be used:
+```
+docker cp sigmod-repro:/home/repro/sigmod-repro/plots <destination_path>
+```
+
 ## Project Structure
 
 A readme file with detailed instructions on the reproduction process can be found in the docs directory, alongside a supplementary description (Quantum_Foundations.pdf) on various quantum computing concepts helpful for comprehending our paper (though not strictly necessary).
