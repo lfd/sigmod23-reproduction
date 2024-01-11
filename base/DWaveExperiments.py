@@ -375,20 +375,17 @@ def conduct_QPU_experiments(relations, num_decimal_pos, annealing_times, graph_t
                             thres = load_data(problem_path_prefix + '/JSON/' + problem_path_main, 'thres.txt')
                             bqm, weight_a = QUBOGenerator.generate_QUBO_for_DWave(card, thres, decimal_pos, pred, pred_sel)
                             ProblemGenerator.save_join_ordering_qubo(qubo_problem_path, bqm)
-                            embedding = load_data(problem_path_prefix + '/JSON/' + problem_path_main + "/embedding/" + str(decimal_pos) + "decpos", 'best_embedding.txt')
-                            save_data(embedding, qubo_problem_path + '/embedding/' + str(decimal_pos) + "decpos", 'best_embedding.txt')
+                            if not use_classical_solver:
+                                embedding = load_data(problem_path_prefix + '/JSON/' + problem_path_main + "/embedding/" + str(decimal_pos) + "decpos", 'best_embedding.txt')
+                                save_data(embedding, qubo_problem_path + '/embedding/' + str(decimal_pos) + "decpos", 'best_embedding.txt')
                         
-                        embedding = format_loaded_embedding(load_from_path(qubo_problem_path + "/embedding/" + str(decimal_pos) + "decpos" + '/best_embedding.txt'))                
-
-                        if not use_classical_solver:
-                            embedded_sampler = embed_sampler(sampler, embedding)
-                        else:
-                            embedded_sampler = None
                         for s in samples:
                             response = None
                             if use_classical_solver:
                                 response = solve_problem_classical(bqm, num_reads=num_reads)
                             else:
+                                embedding = format_loaded_embedding(load_from_path(qubo_problem_path + "/embedding/" + str(decimal_pos) + "decpos" + '/best_embedding.txt'))                
+                                embedded_sampler = embed_sampler(sampler, embedding)
                                 response = solve_problem(bqm, embedded_sampler, num_reads=num_reads, annealing_time=at)
                             result_path_suffix = str(decimal_pos) + 'decpos/sample' + str(s)
                             result_path = result_path_prefix + '/' + str(at) + '_AT/' + problem_path_main + '/' + result_path_suffix
@@ -539,7 +536,8 @@ if __name__ == '__main__':
     else:
         problem_path_prefix = "ExperimentalAnalysis/DWave/QPUPerformance/Problems/SteinbrunnQueries"
         SteinbrunnQueryGenerator.produce_steinbrunn_queries_for_DWave_processing(relations, query_graph_types, problems, [], problem_path_prefix)
-        preembed_problems_for_QPU_experiments(relations, decimal_positions, query_graph_types, problems, problem_path_prefix, iterations=20, override_existing_embedding=True)
+        if processing == "qpu":
+            preembed_problems_for_QPU_experiments(relations, decimal_positions, query_graph_types, problems, problem_path_prefix, iterations=20, override_existing_embedding=True)
 
     if processing == "qpu":
         result_path_prefix = "ExperimentalAnalysis/DWave/QPUPerformance/Results/QPU_Data/SteinbrunnQueries"

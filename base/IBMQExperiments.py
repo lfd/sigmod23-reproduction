@@ -166,7 +166,7 @@ def solve_with_QAOA(qubo, iterations, reps=1, use_local_simulator=False):
 
 def conduct_IBMQ_QPU_experiments():
     
-    processing = config.configuration["processing"]
+    processing = config.configuration["ibmq-processing"]
     if processing == "qpu":
         token = config.configuration["ibmq-token"]
         IBMQ.save_account(token)
@@ -180,8 +180,9 @@ def conduct_IBMQ_QPU_experiments():
     for iterations in iterations_categories:
         for i in range(4):
             
-            card, pred, pred_sel = ProblemGenerator.get_join_ordering_problem('ExperimentalAnalysis/IBMQ/QPUPerformance/Problems/JSON/' + str(i) + '_predicates', generated_problems=False)
-            qubo, weight_a = QUBOGenerator.generate_QUBO_for_IBMQ(card, thres, num_decimal_pos, pred, pred_sel)
+            #card, pred, pred_sel = ProblemGenerator.get_join_ordering_problem('ExperimentalAnalysis/IBMQ/QPUPerformance/Problems/JSON/' + str(i) + '_predicates', generated_problems=False)
+            #qubo, weight_a = QUBOGenerator.generate_QUBO_for_IBMQ(card, thres, num_decimal_pos, pred, pred_sel)
+            qubo = ProblemGenerator.get_join_ordering_qubo('ExperimentalAnalysis/IBMQ/QPUPerformance/Problems/QUBO/' + str(i) + '_predicates')
 
             response = None
             if processing == "qpu":

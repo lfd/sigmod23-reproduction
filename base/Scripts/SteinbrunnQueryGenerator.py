@@ -212,7 +212,7 @@ def produce_steinbrunn_queries_for_DWave_processing(relations, graph_types, prob
         for graph_type in graph_types:
             for p in problems:
                 cardinalities, selectivities = produce_steinbrunn_query(num_relations, graph_type, "Random", max_cardinality=100000)
-                problem_path = problem_path_prefix + '/' + graph_type + '_query/' + str(num_relations) + 'relations/problem' + str(p)
+                problem_path = problem_path_prefix + '/JSON/' + graph_type + '_query/' + str(num_relations) + 'relations/problem' + str(p)
 
                 pred = []
                 pred_sel = []
